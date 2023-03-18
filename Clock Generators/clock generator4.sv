@@ -2,7 +2,7 @@
 
 `timescale 1ns/1ps
 
-module clock_generator1();
+module clock_generator4();
     reg clk=0;    // reference clk with 100MHz
     reg clk1=0;   // generated clk
 
@@ -10,12 +10,15 @@ always #5 clk=~clk;
 
 task calculation( input real phase, input real period, input real dutycycle,
                   output real pout, output real ton, output real toff);
+ begin
     pout=phase;    
     ton= dutycycle*period;    
     toff=period-ton;
+ end
 endtask
 
 task clkgen(input real phase, input real ton, input real toff);
+ begin
     #phase;
     forever 
     begin
@@ -24,6 +27,7 @@ task clkgen(input real phase, input real ton, input real toff);
         clk1=0;
         #toff;
     end
+ end
 endtask
 
 real phase, ton, toff;
